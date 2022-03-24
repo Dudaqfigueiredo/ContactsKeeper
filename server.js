@@ -1,15 +1,19 @@
 const express = require('express');
-//const connectDB = require('./config/db');
+const connectDB = require('./config/db');
 //const path = require('path');
 
 const app = express();
 
-/* // Connect Database
+// Connect Database
 connectDB();
 
 // Init Middleware
-app.use(express.json({ extended: false }));
+/*app.use(express.json({ extended: false }));
 */
+
+app.get('/', (req, res) =>
+    res.json({ msg: 'Welcome'})
+);
 
 // Define Routes
 app.use('/api/users', require('./routes/users'));
