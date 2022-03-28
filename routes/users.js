@@ -1,19 +1,17 @@
 const express = require('express');
 const router = express.Router();
-/* const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const { check, validationResult } = require('express-validator'); */
 
-/* const User = require('../models/User'); */
+const { check, validationResult } = require('express-validator'); 
+
+const User = require('../models/User');
 
 // @route     POST api/users
 // @desc      Regiter a user
 // @access    Public
-router.post('/', (req, res) => {
-    res.send('Register a user');
-})
-/* router.post(
+router.post(
   '/',
   check('name', 'Please add name').not().isEmpty(),
   check('email', 'Please include a valid email').isEmail(),
@@ -47,7 +45,7 @@ router.post('/', (req, res) => {
       user.password = await bcrypt.hash(password, salt);
 
       await user.save();
-
+      
       const payload = {
         user: {
           id: user.id
@@ -64,12 +62,12 @@ router.post('/', (req, res) => {
           if (err) throw err;
           res.json({ token });
         }
-      );
+      ); 
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
     }
   }
-); */
+);
 
 module.exports = router;
