@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useContext } from 'react';
 import ContactContext from '../../context/contact/contactContext';
-import contactContext from '../../context/contact/contactContext';
-import { useContacts, getContacts } from '../../context/contact/ContactState';
+import ContactItem from './ContactItem';
 
 const Contacts = () => {
   /* const [contactState, contactDispatch] = useContacts();
@@ -21,7 +20,7 @@ const Contacts = () => {
 
   return (
     <Fragment>
-      {contacts.map(contact => <h3>{contact.name}</h3>)}
+      {contacts.map(contact => (<ContactItem key={contact.id} contact={contact}/>))}
       {/* {contacts !== null ? (
         <TransitionGroup>
           {filtered !== null
