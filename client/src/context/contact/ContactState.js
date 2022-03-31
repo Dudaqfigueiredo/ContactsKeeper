@@ -1,8 +1,8 @@
-import React, { useReducer, useContext } from 'react';
-import axios from 'axios';
-import ContactContext from './contactContext';
-import uuid from 'uuid';
-import contactReducer from './contactReducer';
+import React, { useReducer, useContext } from "react";
+import axios from "axios";
+import contactContext from "./contactContext";
+import { v4 as uuid } from "uuid";
+import contactReducer from "./contactReducer";
 import {
   GET_CONTACTS,
   ADD_CONTACT,
@@ -13,8 +13,9 @@ import {
   FILTER_CONTACTS,
   CLEAR_CONTACTS,
   CLEAR_FILTER,
-  CONTACT_ERROR
-} from '../types';
+  CONTACT_ERROR,
+} from "../types";
+
 /* 
 // Create a custom hook to use the contact context
 
@@ -41,11 +42,11 @@ export const getContacts = async (dispatch) => {
       payload: err.response.msg
     });
   }
-};
+}; */
 
 // Add Contact
-export const addContact = async (dispatch, contact) => {
-  try {
+//export const addContact = async (dispatch, contact) => {
+/* try {
     const res = await axios.post('/api/contacts', contact);
 
     dispatch({
@@ -56,10 +57,11 @@ export const addContact = async (dispatch, contact) => {
     dispatch({
       type: CONTACT_ERROR,
       payload: err.response.msg
-    });
+    }); 
   }
-};
+}*/
 
+/*
 // Delete Contact
 export const deleteContact = async (dispatch, id) => {
   try {
@@ -121,35 +123,86 @@ export const clearFilter = (dispatch) => {
 
 const ContactState = (props) => {
   const initialState = {
-    contacts: [{
-      id: 1,
-      name: 'Victor',
-      email: 'victor@gmail.com',
-      phone: '4444-444',
-      type: 'personal'
-    },
-    {
-      id: 2,
-      name: 'Sara',
-      email: 'sara@gmail.com',
-      phone: '5555-444',
-      type: 'professional'
-    }
-    ]
-  }
+    contacts: [
+      {
+        id: 1,
+        name: "Victor",
+        email: "victor@gmail.com",
+        phone: "4444-444",
+        type: "personal",
+      },
+      {
+        id: 2,
+        name: "Sara",
+        email: "sara@gmail.com",
+        phone: "5555-444",
+        type: "professional",
+      },
+    ],
+    current: null,
+    filtered: null,
+  };
   /* const initialState = {
     contacts: null,
     current: null,
     filtered: null,
     error: null */
 
-   const [state, dispatch] = useReducer(contactReducer, initialState);
+  const [state, dispatch] = useReducer(contactReducer, initialState);
+
+  // Add Contact
+  const addContact = (contact) => {
+    contact.id = uuid();
+    dispatch({ type: ADD_CONTACT, payload: contact });
+  };
+
+  // Delete Contact
+  const deleteContact = (id) => {
+    dispatch({ type: DELETE_CONTACT, payload: id });
+  };
+
+  //Set Current Contact
+  const setCurrent = (contact) => {
+    dispatch({ type: SET_CURRENT, payload: contact });
+  };
+  //Clear Current Contact
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
+
+  //Update Current
+  const updateContact = (contact) => {
+    dispatch({ type: UPDATE_CONTACT, payload: contact });
+  };
+
+  //Filter Contacts
+  const filterContacts = (text) => {
+    dispatch({ type: FILTER_CONTACTS, payload: text });
+  };
+
+  //Clear Filter 
+  const clearFilter = () => {
+    dispatch({ type: CLEAR_FILTER });
+  };
 
   return (
-    <ContactContext.Provider value={{ contacts: state.contacts }}>
+    <contactContext.Provider
+      value={{
+        contacts: state.contacts,
+        current: state.current,
+        filtered: state.current,
+        addContact,
+        deleteContact,
+        setCurrent,
+        clearCurrent,
+        updateContact,
+        filterContacts,
+        clearFilter
+      }}
+    >
       {props.children}
-    </ContactContext.Provider>
+    </contactContext.Provider>
   );
-}; 
+};
 
 export default ContactState;

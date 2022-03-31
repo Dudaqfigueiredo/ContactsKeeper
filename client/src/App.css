@@ -5,8 +5,8 @@
   --primary-color: #1d1e40;
   --dark-color: #333333;
   --light-color: #f4f4f4;
-  --danger-color: #dc3545;
-  --success-color: #28a745;
+  --danger-color: #97242f;
+  --success-color: #175c27;
 }
 
 * {
@@ -240,8 +240,14 @@ img {
   background: var(--primary-color);
   color: #fff;
 }
+.btn-light{
+  background-color: rgb(174, 171, 171);
+}
 
-.btn-light,
+.bg-light{
+  box-shadow: 5px 5px 5px 5px rgb(140, 138, 138);
+}
+
 .bg-light,
 .badge-light,
 .alert-light {
